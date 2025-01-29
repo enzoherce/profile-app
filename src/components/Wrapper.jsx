@@ -1,6 +1,9 @@
-function Wrapper({ children }) {
-    return <div className="wrapper">{children}</div>;
-  }
+const Wrapper = ({ children }) => {
+    return (
+      <div className="section">
+        <div className="container">{children}</div>
+      </div>
+    );
+  };
   
   export default Wrapper;
-  
