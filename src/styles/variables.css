@@ -4,7 +4,9 @@ body{
     --primary-background-color: #f7f7f7;
     --secondary-backrgound-color: #646cff;
     --third-background-color: #ffffff;
+    --dark-background-color: #191a1a;
     --text-color: #191a1a;
+    --dark-text-color: #ffffff;
     --button-background-color: #1a1a1a;
     --button-text-color: #ffffff;
     --button-hover-background-color: var(--primary-background-color);
