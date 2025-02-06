@@ -8,6 +8,8 @@ import Wrapper from "./components/Wrapper";
 import { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import ProfileForm from "./components/ProfileForm";
+
 
 const App = () => {
   const profiles = [
@@ -89,7 +91,7 @@ const App = () => {
   //filter the profiles based on the title
   const filtedProfiles = profiles.filter(
     (profile) =>
-      (title === "" || profile.title === title) &&
+     (title === "" || profile.title === title) &&
       profile.name.toLowerCase().includes(search.toLowerCase())
   );
   const buttonStyle = {
@@ -107,6 +109,9 @@ const App = () => {
         </Wrapper>
         <Wrapper>
           <About />
+        </Wrapper>
+        <Wrapper>
+          <ProfileForm />
         </Wrapper>
         <Wrapper>
           <div className="filter-wrapper">
