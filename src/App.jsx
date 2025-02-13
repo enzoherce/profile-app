@@ -9,48 +9,61 @@ import { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import ProfileForm from "./components/ProfileForm";
+import { useEffect } from "react";
+import { use } from "react";
 
 
 const App = () => {
-  const profiles = [
-    {
-      img: image_man,
-      name: "John Doe",
-      title: "Software Engineer",
-      email: "a@a.com",
-    },
-    {
-      img: image_woman,
-      name: "Lily Smith",
-      title: "UX designer",
-      email: "b@a.com",
-    },
-    {
-      img: image_man,
-      name: "Bob Johnson",
-      title: "Web developer",
-      email: "c@a.com",
-    },
-    {
-      img: image_woman,
-      name: "Ava Smith",
-      title: "Web developer",
-      email: "d@a.com",
-    },
-    {
-      img: image_man,
-      name: "Tom Smith",
-      title: "Software Engineer",
-      email: "e@a.com",
-    },
-    {
-      img: image_woman,
-      name: "Eva Smith",
-      title: "Graphic designer",
-      email: "f@a.com",
-    },
-  ];
+  // const profiles = [
+  //   {
+  //     img: image_man,
+  //     name: "John Doe",
+  //     title: "Software Engineer",
+  //     email: "a@a.com",
+  //   },
+  //   {
+  //     img: image_woman,
+  //     name: "Lily Smith",
+  //     title: "UX designer",
+  //     email: "b@a.com",
+  //   },
+  //   {
+  //     img: image_man,
+  //     name: "Bob Johnson",
+  //     title: "Web developer",
+  //     email: "c@a.com",
+  //   },
+  //   {
+  //     img: image_woman,
+  //     name: "Ava Smith",
+  //     title: "Web developer",
+  //     email: "d@a.com",
+  //   },
+  //   {
+  //     img: image_man,
+  //     name: "Tom Smith",
+  //     title: "Software Engineer",
+  //     email: "e@a.com",
+  //   },
+  //   {
+  //     img: image_woman,
+  //     name: "Eva Smith",
+  //     title: "Graphic designer",
+  //     email: "f@a.com",
+  //   },
+  // ];
+
   //Variable to store the animation state
+  const [profiles, setProfiles] = useState([]);
+  useEffect(() => {
+    fetch("https://web.ics.purdue.edu/~vherce/fetch-data.php")
+      .then((res) => res.json())
+      .then((data) => {
+        setProfiles(data);
+        console.log(data)
+      })
+  }, []);
+
   const [animation, setAnimation] = useState(false);
   //function to update the animation state
   const handleAnimation = () => {
@@ -147,7 +160,7 @@ const App = () => {
           <div className="profile-cards">
             {filtedProfiles.map((profile) => (
               <Card
-                key={profile.email}
+                key={profile.id}
                 {...profile}
                 animate={animation}
                 updateAnimate={handleAnimation}
