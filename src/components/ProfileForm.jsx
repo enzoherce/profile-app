@@ -51,7 +51,7 @@ const ProfileForm = ({ isEdit = false, currentProfile = {} }) => {
     formData.append("title", data.title.trim());
     formData.append("bio", data.bio.trim());
     if (data.image) formData.append("image", data.image);
-    console.log(data.image + "test");
+  
     try {
       const response = await fetch(
         "https://web.ics.purdue.edu/~vherce/send-data-with-id.php",
@@ -61,6 +61,7 @@ const ProfileForm = ({ isEdit = false, currentProfile = {} }) => {
         }
       );
       const result = await response.json();
+      
       if (result.success) {
         setData({ name: "", title: "", email: "", bio: "", image: null });
         setErrors({ image: "", general: "" });
@@ -70,15 +71,16 @@ const ProfileForm = ({ isEdit = false, currentProfile = {} }) => {
         }, 1000);
         isEdit && navigate(-1);
       } else {
-        setErrors({ image: "", general: result.message });
+        setErrors({ image: "", general: result.message || "Submission failed." });
         setSuccessMessage("");
       }
     } catch (error) {
-      setErrors({ image: "", general: error });
+      setErrors({ image: "", general: error.message || "An unknown error occurred." });
     } finally {
       setSubmitting(false);
     }
   };
+  
   return (
     <form onSubmit={handleSubmit} className={style["profile-form"]}>
       <input

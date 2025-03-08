@@ -1,13 +1,13 @@
 import { useState, useEffect, useContext, useRef } from "react";
 import style from "../styles/ProfileForm.module.css";
 import { useNavigate } from "react-router-dom";
-import AuthContext from "../contexts/AuthContext";
+import { useAuth } from "../hooks/useAuth";
 import { use } from "react";
 
 const AuthForm = ({ isRegister = false }) => {
 
   const usernameRef = useRef(null);
-  const { login } = useContext(AuthContext);
+  const { login } = useAuth();
   const [data, setData] = useState({
     username: "",
     password: "",

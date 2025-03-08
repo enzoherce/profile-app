@@ -1,22 +1,21 @@
-import { useEffect, useState, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
 import Wrapper from "../components/Wrapper";
 import styles from "../styles/profiledetail.module.css";
-import { Link } from "react-router-dom";
-import AuthContext from "../contexts/AuthContext";
+import { useAuth } from "../hooks/useAuth"; 
 
 const ProfileDetailPage = () => {
   const [profile, setProfile] = useState({});
   const { id } = useParams();
-  const { isLogin } = useContext(AuthContext);
+  const { isLogin } = useAuth();
+
   useEffect(() => {
-    fetch(
-      `https://web.ics.purdue.edu/~vherce/fetch-data-with-id.php?id=${id}`
-    )
+    fetch(`https://web.ics.purdue.edu/~vherce/fetch-data-with-id.php?id=${id}`)
       .then((res) => res.json())
       .then((data) => {
         setProfile(data);
-      });
+      })
+      .catch((error) => console.error("Error fetching profile:", error));
   }, [id]);
 
   return (
@@ -29,7 +28,11 @@ const ProfileDetailPage = () => {
         </p>
         <p>{profile.bio}</p>
         <img src={profile.image_url} alt={profile.name} />
-        {isLogin && <Link to="edit" className={styles['button']}>Edit Profile</Link>}
+        {isLogin && (
+          <Link to="edit" className={styles["button"]}>
+            Edit Profile
+          </Link>
+        )}
       </div>
     </Wrapper>
   );

@@ -12,7 +12,7 @@ import RegisterPage from "./pages/RegisterPage";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import ModeContext from "./contexts/ModeContext"; 
 import { useContext } from "react";
-import { AuthProvider } from "./contexts/AuthContext";
+import { AuthProvider } from "./hooks/useAuth";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = () => {
