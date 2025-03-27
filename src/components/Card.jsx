@@ -1,7 +1,8 @@
 import style from "../styles/card.module.css";
 import PropTypes from "prop-types";
+import { useRef, useEffect, memo } from "react";
 
-const Card = ({ image_url, name, title, email }) => {
+const Card = memo(({ image_url, name, title, email }) => {
   return (
     <div
       className={`${style["profile-card"]} ${style["is-entering"]}`}
@@ -12,13 +13,11 @@ const Card = ({ image_url, name, title, email }) => {
       <div className={style["profile-card__content"]}>
         <p>{name}</p>
         <p>{title}</p>
-        {/* <p>
-          <a href={`mailto:${email}`}>{email}</a>
-        </p> */}
+
       </div>
     </div>
   );
-};
+});
 Card.propTypes = {
   image_url: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,

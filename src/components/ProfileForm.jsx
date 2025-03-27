@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo, useRef } from "react";
 import style from "../styles/ProfileForm.module.css";
 import { useNavigate } from "react-router-dom";
 
 const ProfileForm = ({ isEdit = false, currentProfile = {} }) => {
+
   const navigate = useNavigate();
   const [data, setData] = useState({
     name: "",
@@ -51,7 +52,7 @@ const ProfileForm = ({ isEdit = false, currentProfile = {} }) => {
     formData.append("title", data.title.trim());
     formData.append("bio", data.bio.trim());
     if (data.image) formData.append("image", data.image);
-  
+    console.log(data.image + "test");
     try {
       const response = await fetch(
         "https://web.ics.purdue.edu/~vherce/send-data-with-id.php",
@@ -61,7 +62,6 @@ const ProfileForm = ({ isEdit = false, currentProfile = {} }) => {
         }
       );
       const result = await response.json();
-      
       if (result.success) {
         setData({ name: "", title: "", email: "", bio: "", image: null });
         setErrors({ image: "", general: "" });
@@ -71,16 +71,15 @@ const ProfileForm = ({ isEdit = false, currentProfile = {} }) => {
         }, 1000);
         isEdit && navigate(-1);
       } else {
-        setErrors({ image: "", general: result.message || "Submission failed." });
+        setErrors({ image: "", general: result.message });
         setSuccessMessage("");
       }
     } catch (error) {
-      setErrors({ image: "", general: error.message || "An unknown error occurred." });
+      setErrors({ image: "", general: error });
     } finally {
       setSubmitting(false);
     }
   };
-  
   return (
     <form onSubmit={handleSubmit} className={style["profile-form"]}>
       <input
@@ -115,7 +114,7 @@ const ProfileForm = ({ isEdit = false, currentProfile = {} }) => {
         value={data.bio}
         onChange={handleChange}
       ></textarea>
-      <p>{data.bio.length}/200</p>
+      <p className={style["profile-text"]}>{data.bio.length}/200</p>
       <label htmlFor="image">Choose a profile picture:</label>
       <input
         type="file"

@@ -1,12 +1,12 @@
 import styles from "../styles/navbar.module.css";
 import { Link, useNavigate } from "react-router-dom";
-import ModeContext from "../contexts/ModeContext"; 
+import {useMode} from "../contexts/ModeContext"; 
 import { useContext } from "react";
-import { useAuth } from "../hooks/useAuth";
+import AuthContext from "../contexts/AuthContext";
 
 const Navbar = () => {
-  const { mode, handleModeChange } = useContext(ModeContext);
-  const { isLogin, logout } = useAuth();
+  const { mode, handleModeChange } = useMode();
+  const { isLogin, logout } = useContext(AuthContext);
   const navigate = useNavigate();
   const handleClick = () => {
     logout();
