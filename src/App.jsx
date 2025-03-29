@@ -8,17 +8,17 @@ import ProfileDetailPage from "./pages/ProfileDetailPage";
 import ProfileEditPage from "./pages/ProfileEditPage";
 import ProfileIndexPage from "./pages/ProfileIndexPage";
 import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage"; 
+import RegisterPage from "./pages/RegisterPage";
 import { HashRouter, Routes, Route } from "react-router-dom";
-import { useMode } from "./contexts/ModeContext"; 
+import { useSelector } from "react-redux"; // ✅ import from Redux
 import { lazy, Suspense } from "react";
 import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = () => {
-
-  const { mode } = useMode();
+  const mode = useSelector((state) => state.mode.value);
   const LazyComponent = lazy(() => import("./pages/ProfileDetailPage"));
+
   return (
     <AuthProvider>
       <HashRouter>
@@ -29,14 +29,31 @@ const App = () => {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/about" element={<AboutPage />} />
-            <Route path="/add-profile" element={
-              <ProtectedRoute>
-                <AddProfilePage />
-              </ProtectedRoute>
-              } />
+            <Route
+              path="/add-profile"
+              element={
+                <ProtectedRoute>
+                  <AddProfilePage />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/profile/:id" element={<ProfileIndexPage />}>
-              <Route index element={<Suspense fallback = {<div>Loading...</div>}><LazyComponent /></Suspense>} />
-              <Route path="edit" element={<ProtectedRoute><ProfileEditPage /></ProtectedRoute>} />
+              <Route
+                index
+                element={
+                  <Suspense fallback={<div>Loading...</div>}>
+                    <LazyComponent />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="edit"
+                element={
+                  <ProtectedRoute>
+                    <ProfileEditPage />
+                  </ProtectedRoute>
+                }
+              />
             </Route>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
