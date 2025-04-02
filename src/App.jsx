@@ -10,9 +10,8 @@ import ProfileIndexPage from "./pages/ProfileIndexPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import { HashRouter, Routes, Route } from "react-router-dom";
-import { useSelector } from "react-redux"; // ✅ import from Redux
+import { useSelector } from "react-redux";
 import { lazy, Suspense } from "react";
-import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = () => {
@@ -20,48 +19,46 @@ const App = () => {
   const LazyComponent = lazy(() => import("./pages/ProfileDetailPage"));
 
   return (
-    <AuthProvider>
-      <HashRouter>
-        <header>
-          <Navbar />
-        </header>
-        <main className={mode === "light" ? "light" : "dark"}>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/about" element={<AboutPage />} />
+    <HashRouter>
+      <header>
+        <Navbar />
+      </header>
+      <main className={mode === "light" ? "light" : "dark"}>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route
+            path="/add-profile"
+            element={
+              <ProtectedRoute>
+                <AddProfilePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/profile/:id" element={<ProfileIndexPage />}>
             <Route
-              path="/add-profile"
+              index
+              element={
+                <Suspense fallback={<div>Loading...</div>}>
+                  <LazyComponent />
+                </Suspense>
+              }
+            />
+            <Route
+              path="edit"
               element={
                 <ProtectedRoute>
-                  <AddProfilePage />
+                  <ProfileEditPage />
                 </ProtectedRoute>
               }
             />
-            <Route path="/profile/:id" element={<ProfileIndexPage />}>
-              <Route
-                index
-                element={
-                  <Suspense fallback={<div>Loading...</div>}>
-                    <LazyComponent />
-                  </Suspense>
-                }
-              />
-              <Route
-                path="edit"
-                element={
-                  <ProtectedRoute>
-                    <ProfileEditPage />
-                  </ProtectedRoute>
-                }
-              />
-            </Route>
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </main>
-      </HashRouter>
-    </AuthProvider>
+          </Route>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
+    </HashRouter>
   );
 };
 

@@ -1,40 +1,32 @@
 import styles from "../styles/navbar.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { toggleMode } from "../mode/modeSlice"; 
-import { useContext } from "react";
-import AuthContext from "../contexts/AuthContext";
+import { toggleMode } from "../mode/modeSlice";
+import { logout } from "../mode/authSlice"; 
 
 const Navbar = () => {
   const mode = useSelector((state) => state.mode.value);
+  const isLogin = useSelector((state) => state.auth.isLogin);
   const dispatch = useDispatch();
-  const { isLogin, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleClick = () => {
-    logout();
+    dispatch(logout());
     navigate("/login");
   };
 
   const handleModeChange = () => {
-    dispatch(toggleMode()); 
+    dispatch(toggleMode());
   };
 
   return (
     <nav className={`${styles["navbar"]}`}>
       <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/about">About</Link>
-        </li>
-        {isLogin && (
-          <li>
-            <Link to="/add-profile">Add Profile</Link>
-          </li>
-        )}
+        <li><Link to="/">Home</Link></li>
+        <li><Link to="/about">About</Link></li>
+        {isLogin && <li><Link to="/add-profile">Add Profile</Link></li>}
       </ul>
+
       {isLogin ? (
         <button onClick={handleClick}>Logout</button>
       ) : (
@@ -43,6 +35,7 @@ const Navbar = () => {
           <li><Link to="/login">Login</Link></li>
         </ul>
       )}
+
       <button onClick={handleModeChange}>
         {mode === "light" ? "Light Mode" : "Dark Mode"}
       </button>
