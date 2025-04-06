@@ -1,0 +1,12 @@
+{
+    "help": "Here are some things you can ask me:\n- 'hello'\n- 'who made you'\n- 'what can you do'\n- 'how do i register'\n- 'how do i add a profile'\n- 'how do i logout'",
+    "hello": "Hi there!",
+    "who made you": "I was made by Vito Herce using React.",
+    "what can you do": "I can help answer questions about using this profile app.",
+    "how do i register": "Click on the 'Register' link in the navbar and fill in your credentials.",
+    "how do i login": "Go to the Login page and enter your username and password.",
+    "how do i logout": "Click the 'Logout' button in the navbar when you're logged in.",
+    "how do i add a profile": "Navigate to 'Add Profile' (only visible when logged in), fill out the form, and submit it!",
+    "how do i edit my profile": "Go to your profile, and if you're logged in, click 'Edit Profile'."
+  }
+  

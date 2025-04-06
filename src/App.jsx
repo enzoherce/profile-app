@@ -9,6 +9,8 @@ import ProfileEditPage from "./pages/ProfileEditPage";
 import ProfileIndexPage from "./pages/ProfileIndexPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import ChatPage from "./pages/ChatPage"; // ✅ Import ChatPage
+
 import { HashRouter, Routes, Route } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { lazy, Suspense } from "react";
@@ -53,6 +55,7 @@ const App = () => {
               }
             />
           </Route>
+          <Route path="/chat" element={<ChatPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="*" element={<NotFound />} />

@@ -25,6 +25,7 @@ const Navbar = () => {
         <li><Link to="/">Home</Link></li>
         <li><Link to="/about">About</Link></li>
         {isLogin && <li><Link to="/add-profile">Add Profile</Link></li>}
+        <li><Link to="/chat">Chat</Link></li>
       </ul>
 
       {isLogin ? (
